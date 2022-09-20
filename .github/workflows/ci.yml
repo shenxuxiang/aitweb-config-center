@@ -14,6 +14,8 @@ jobs:
     name: Build Task
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.head_commit.message, 'build') }}
+    outputs:
+      output1: $(echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S))
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -23,12 +25,14 @@ jobs:
         with:
           node-version: 16
 
-      - name: Echo Time
+      - name: Compute Time
         id: timestamp
         run: |
-          echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S)
           echo "::set-output name=timestamp::$(echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S))"
 
+      - name: Echo Time
+        run: |
+          echo ${{ steps.timestamp.outputs.timestamp }}
       # - name: Build Code
       #   run: |
       #     npm run build
@@ -43,8 +47,8 @@ jobs:
       ref_name: ${{ github.ref_name }}
       ref_type: ${{ github.ref_type }}
       event_name: ${{ github.event_name }}
-      author: ${{ github.event.head_commit.commiter.user_name }}
-      email: ${{ github.event.head_commit.commiter.email }}
+      author: ${{ github.event.head_commit.committer.user_name }}
+      email: ${{ github.event.head_commit.committer.email }}
       timestamp: ${{ needs.job-1.steps.timestamp.outputs.timestamp }}
     steps:
       - name: Echo Env
@@ -56,6 +60,7 @@ jobs:
           echo "author: ${author}"
           echo "email: ${email}"
           echo "time: ${timestamp}"
+          echo "output1:" ${{ needs.job-1.outputs.output1 }}
 
 
 
