@@ -45,7 +45,7 @@ jobs:
       event_name: ${{ github.event_name }}
       author: ${{ github.event.head_commit.commiter.user_name }}
       email: ${{ github.event.head_commit.commiter.email }}
-      timestamp: ${{ jobs.job-1.steps.timestamp.outputs.timestamp }}
+      timestamp: ${{ needs.job-1.steps.timestamp.outputs.timestamp }}
     steps:
       - name: Echo Env
         run: |
