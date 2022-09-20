@@ -51,10 +51,9 @@ jobs:
       event_name: ${{ github.event_name }}
       author: ${{ github.event.head_commit.committer.username }}
       email: ${{ github.event.head_commit.committer.email }}
+      timestamp: ${{ needs.job-1.outputs.output1 }}
     steps:
       - name: Echo Env
-        env:
-          timestamp: ${{ needs.job-1.steps.timestamp.outputs.timestamp }}
         run: |
           echo "ref: ${ref}"
           echo "ref_name: ${ref_name}"
