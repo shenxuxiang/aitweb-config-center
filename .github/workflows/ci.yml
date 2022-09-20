@@ -14,8 +14,7 @@ jobs:
     name: Build Task
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.head_commit.message, 'build') }}
-    outputs:
-      output1: $(echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S))
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -33,6 +32,9 @@ jobs:
       - name: Echo Time
         run: |
           echo ${{ steps.timestamp.outputs.timestamp }}
+
+    outputs:
+      output1: ${{ steps.timestamp.outputs.timestamp }}
       # - name: Build Code
       #   run: |
       #     npm run build
