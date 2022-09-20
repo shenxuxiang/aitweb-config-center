@@ -1,0 +1,81 @@
+.ait_spin {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.ait_spin_dot {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 20px;
+  height: 20px;
+  animation: dotAnimation 1.2s linear infinite;
+}
+.ait_spin_dot_item {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1890ff;
+  opacity: 0.3;
+  animation: dotItemAnimation 1s linear alternate infinite;
+}
+.ait_spin_dot_item:nth-child(2n) {
+  margin-left: 4px;
+}
+.ait_spin_dot_item:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.ait_spin_dot_item:nth-child(3) {
+  animation-delay: 1.2s;
+}
+.ait_spin_dot_item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotAnimation {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes dotItemAnimation {
+  to {
+    opacity: 1;
+  }
+}
+
+.ait_spin_box {
+  position: relative;
+}
+.ait_spin_spinning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 400px;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.3s ease;
+  &.hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+.ait_spin_spinning_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.ait_spin_container {
+  transition: opacity 0.3s ease;
+}
+.ait_spin_mask {
+  clear: both;
+  opacity: 0.5;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+}

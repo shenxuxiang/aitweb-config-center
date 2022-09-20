@@ -1,0 +1,129 @@
+.ait-input-x {
+  display: inline-block;
+  width: 100%;
+}
+/* 纯 input 样式定义 */
+.ait-input {
+  display: inline-block;
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  padding: 8px 11px;
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  outline: none;
+  background: #fff;
+  transition: all 0.3s ease;
+  &:hover {
+    border-color: #40a9ff;
+  }
+  &:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+  &[disabled] {
+    color: rgba(0, 0, 0, 0.25);
+    border-color: #d9d9d9;
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+  &.error,
+  &.error:hover {
+    border-color: #ff4d4f;
+  }
+  &.error:focus {
+    border-color: #ff4d4f;
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+  }
+}
+.ait-input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+.ait-input::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+.ait-input:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* 包含 suffex、prefix 的样式定义 */
+.ait-input-affix {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 32px;
+  background: #fff;
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s ease;
+  &:hover {
+    border-color: #40a9ff;
+  }
+  &:focus-within {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+  &.disabled {
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+    cursor: not-allowed;
+  }
+  .ait-input {
+    flex: 1 0 0;
+    border: none;
+    height: 100%;
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+    &:not(:first-child) {
+      padding-left: 0;
+    }
+    &:not(last-child) {
+      padding-right: 0;
+    }
+  }
+  .ait-input-prefix {
+    flex: 0 0 auto;
+    padding-left: 11px;
+    color: rgba(0, 0, 0, 0.85);
+    margin-right: 5px;
+    &.disabled {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+  .ait-input-suffix {
+    flex: 0 0 auto;
+    padding-right: 11px;
+    color: rgba(0, 0, 0, 0.85);
+    margin-left: 5px;
+    &.disabled {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+/* Search 组件的 icon 样式定义 */
+.ait-input-suffix-search-icon {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  transition: color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    color: rgba(0, 0, 0, 0.65);
+  }
+}
+.disabled .ait-input-suffix-search-icon {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.ait-input-error-message {
+  font-size: 14px;
+  color: 1.5715;
+  color: #ff4d4f;
+}

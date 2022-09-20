@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "target": "es5",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "moduleResolution": "node",
+    "removeComments": false,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [ "src/*" ]
+    },
+    "typeRoots": [ "./@types" ],
+    "sourceMap": false
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.d.ts",
+    "./@types/**/*.d.ts"
+  ]
+}

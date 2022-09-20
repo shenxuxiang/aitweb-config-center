@@ -1,0 +1,128 @@
+.ait-modal-mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: black;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s linear;
+  &.show {
+    visibility: visible;
+    opacity: 0.45;
+  }
+}
+.ait-modal-wrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  z-index: 999;
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+  }
+}
+.ait-modal {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  height: auto;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(0.2);
+  visibility: hidden;
+  opacity: 0;
+  overflow: auto;
+  z-index: 999;
+  transition-property: opacity, visibility, transform;
+  transition-timing-function: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  transition-duration: 0.3s;
+  &.show {
+    transform: scale(1);
+    visibility: visible;
+    opacity: 1;
+    transition-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+  }
+}
+
+.ait-modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  background: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.ait-modal-close-button-icon {
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.45);
+}
+.ait-modal-header {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 22px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.ait-modal-body {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ait-modal-foot {
+  padding: 10px 16px;
+  text-align: right;
+  border-top: 1px solid #e8e8e8;
+}
+.ait-modal-foot-button + .ait-modal-foot-button,
+.ait-modal-confirm-foot-button + .ait-modal-confirm-foot-button {
+  margin-left: 10px;
+}
+
+// 一下是 Modal.error、Modal.info、Modal.success、Modal.wran 弹框的样式
+.ait-modal-confirm-x {
+  position: relative;
+  padding: 10px;
+}
+.ait-modal-confirm-icon-x {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.ait-modal-confirm-icon {
+  font-weight: normal;
+  font-size: 22px;
+  color: #1890ff;
+  line-height: 1;
+}
+.ait-modal-confirm-title {
+  margin: 0 0 10px 38px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ait-modal-confirm-body {
+  margin: 0 0 0 37px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 22px;
+}
+.ait-modal-confirm-foot {
+  margin-top: 20px;
+  text-align: right;
+}

@@ -1,0 +1,30 @@
+.page {
+  background: #fff;
+  padding: 20px;
+}
+.page_title {
+  height: 18px;
+  margin: 0;
+  padding-bottom: 20px;
+  font-size: 18px;
+  line-height: 1;
+  box-sizing: content-box;
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    margin-right: 10px;
+    vertical-align: -3px;
+    background: #1890ff;
+  }
+}
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.pagination {
+  margin-top: 20px;
+  text-align: right;
+}

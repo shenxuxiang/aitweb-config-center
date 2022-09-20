@@ -1,0 +1,58 @@
+.ait-popover-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.ait-popover {
+  display: none;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  z-index: 0;
+  transform-origin: 50% 100%;
+  // 设置 translateZ 的目的是为了解决 chrome 下问题抖动的 bug
+  transform: scale(0.8) translateZ(0);
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.2s;
+  transition-delay: 0.1s;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  backface-visibility: hidden;
+  perspective: 2000px;
+}
+.ait-popover.show {
+  // 设置 translateZ 的目的是为了解决 chrome 下问题抖动的 bug
+  transform: scale(1) translateZ(0);
+  opacity: 1;
+  transition-delay: 0;
+}
+.ait-popover-arrow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.1);
+  z-index: -1;
+}
+.ait-popover-body {
+  padding: 16px;
+}
+.ait-popover.top-left {
+  transform-origin: 0 100%;
+}
+.ait-popover.top-right {
+  transform-origin: 100% 100%;
+}
+.ait-popover.top-left .ait-popover-arrow {
+  left: 20px;
+}
+.ait-popover.top-right .ait-popover-arrow {
+  left: auto;
+  right: 20px;
+}

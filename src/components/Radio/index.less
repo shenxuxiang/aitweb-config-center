@@ -1,0 +1,120 @@
+.ait-radio-group {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ait-radio-group.horizontal {
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ait-radio-group.vertical {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.ait-radio-item {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 32px;
+  margin-right: 8px;
+  cursor: pointer;
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+.ait-radio {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+.ait-radio-item-checked .ait-radio::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #1890ff;
+  border-radius: 50%;
+  visibility: hidden;
+  animation: ait_radio_effect 0.36s ease-in-out;
+  animation-fill-mode: both;
+  content: '';
+}
+.ait-radio-item:hover .ait-radio::after {
+  visibility: visible;
+}
+
+.ait-radio-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  cursor: pointer;
+}
+.ait-radio-inner {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.ait-radio-item:hover .ait-radio-inner {
+  border-color: #1890ff;
+}
+.ait-radio-item-checked .ait-radio-inner {
+  border-color: #1890ff;
+}
+.ait-radio-input:focus + .ait-radio-inner {
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.12);
+}
+.ait-radio-item.disabled .ait-radio-inner {
+  border-color: #d9d9d9;
+  background: #f5f5f5;
+}
+.ait-radio-inner::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 16px;
+  height: 16px;
+  background: #1890ff;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+.ait-radio-item-checked .ait-radio-inner::after {
+  transform: scale(0.5);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}
+.ait-radio-item.disabled .ait-radio-inner::after {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ait-radio-text {
+  padding: 0 8px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.ait-radio-item.disabled .ait-radio-text {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes ait_radio_effect {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}

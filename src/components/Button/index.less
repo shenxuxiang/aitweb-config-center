@@ -1,0 +1,100 @@
+.ait-button {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  user-select: none;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+}
+.ait-button.primary {
+  padding: 0 15px;
+  line-height: 30px;
+  background: #1890ff;
+  border: 1px solid #1890ff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  &:active {
+    background: #1890ff;
+    border-color: #1890ff;
+  }
+}
+.ait-button.ghost,
+.ait-button.dashed {
+  padding: 0 15px;
+  line-height: 30px;
+  background: #fff;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  color: rgba(0, 0, 0, 0.65);
+  transition: all 0.3s ease;
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: #1890ff;
+    color: #1890ff;
+  }
+}
+.ait-button.dashed {
+  border-style: dashed;
+}
+.ait-button.link {
+  padding: 8px;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  color: #1890ff;
+  transition: color 0.3s ease;
+  &:active {
+    color: #096dd9;
+  }
+}
+.ait-button[disabled] {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+  &:hover,
+  &:active,
+  &:focus {
+    color: rgba(0, 0, 0, 0.25);
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+  }
+}
+.ait-button.link[disabled] {
+  background: transparent;
+}
+.ait-button.small {
+  height: 24px;
+  line-height: 22px;
+  padding: 0 7px;
+}
+.ait-button.primary.click::after,
+.ait-button.ghost.click::after,
+.ait-button.dashed.click::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: none;
+  box-shadow: 0 0 0 0px #1890ff;
+  opacity: 0.3;
+  border-radius: inherit;
+  animation: ait_btn_effect 0.3s ease;
+  animation-fill-mode: backwards;
+}
+
+@keyframes ait_btn_effect {
+  100% {
+    box-shadow: 0 0 0 6px #1890ff;
+    opacity: 0;
+  }
+}

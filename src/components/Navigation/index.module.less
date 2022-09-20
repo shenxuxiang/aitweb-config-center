@@ -1,0 +1,33 @@
+.navigation {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+  font-size: 16px;
+}
+.navigation_link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.3s ease;
+  &.active {
+    color: #fff;
+  }
+  & + & {
+    margin-left: 20px;
+  }
+}
+.indicator {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  height: 2px;
+  background: #1890ff;
+  transition: transform 0.2s ease, width 0.2s ease;
+}

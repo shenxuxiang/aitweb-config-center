@@ -1,0 +1,143 @@
+.ait-select {
+  position: relative;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  border-radius: 2px;
+  z-index: 0;
+  &:hover {
+    border-color: #40a9ff;
+  }
+  &.focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+  &.disabled {
+    color: rgba(0, 0, 0, 0.25);
+    border-color: #d9d9d9;
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+.ait-select-placeholder,
+.ait-select-title {
+  position: absolute;
+  display: block;
+  width: calc(100% - 29px);
+  height: 30px;
+  padding: 9px 11px 8px;
+  font-size: 14px;
+  line-height: 1;
+  // title 和 placeholder 的层叠值相同，遵循后来者居上的原则，默认展示 title
+  z-index: 1;
+  color: rgba(0, 0, 0, 0.25);
+  background: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ait-select-title {
+  color: rgba(0, 0, 0, 0.65);
+}
+.ait-select-title:empty {
+  display: none;
+}
+.ait-select.focus .ait-select-title {
+  color: rgba(0, 0, 0, 0.35);
+  transition: color 0.2s ease;
+}
+.ait-select.disabled .ait-select-title,
+.ait-select.disabled .ait-select-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+.ait-select-icon {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+.ait-select.focus .ait-select-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+.ait-select.disabled .ait-select-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+.ait-select-input {
+  position: relative;
+  width: calc(100% - 29px);
+  height: 30px;
+  background: #fff;
+  padding: 8px 11px;
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.65);
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0);
+  z-index: 0;
+  appearance: none;
+}
+.ait-select.focus .ait-select-input {
+  z-index: 2;
+}
+
+/* dropdown 样式 */
+.ait-select-dropdown-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.ait-select-dropdown {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  max-height: 260px;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transform-origin: 0% 0%;
+  transform: scaleY(0.8);
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: 0.2s;
+  transition-delay: 0.1s;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  &.show {
+    transform: scaleY(1);
+    opacity: 1;
+    transition-delay: 0;
+  }
+}
+.ait-select-dropdown-item {
+  height: 32px;
+  padding: 0 11px;
+  line-height: 32px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  &:hover {
+    background: #f5f5f5;
+  }
+  &.active {
+    color: rgba(0, 0, 0, 0.85);
+    background: #e6f7ff;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,119 @@
+.ait-checkbox-group {
+  display: inline-flex;
+}
+.ait-checkbox-group.horizontal {
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ait-checkbox-group.vertical {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.ait-checkbox-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 32px;
+  margin-right: 8px;
+  cursor: pointer;
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+.ait-checkbox {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.ait-checkbox-item-checked .ait-checkbox::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #1890ff;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  visibility: hidden;
+  animation: ait_checkbox_effect 0.36s ease-in-out;
+  animation-fill-mode: both;
+}
+.ait-checkbox-item:hover .ait-checkbox::after {
+  visibility: visible;
+}
+.ait-checkbox-input {
+  display: bock;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  outline: none;
+  border: none;
+}
+.ait-checkbox-inner {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+.ait-checkbox-item:hover .ait-checkbox-inner {
+  border-color: #1890ff;
+}
+.ait-checkbox-item-checked .ait-checkbox-inner {
+  border-color: #1890ff;
+  background: #1890ff;
+}
+.ait-checkbox-item.disabled .ait-checkbox-inner {
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+}
+.ait-checkbox-inner::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 5.71428571px;
+  height: 9.14285714px;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-left: 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0);
+  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+}
+.ait-checkbox-item-checked .ait-checkbox-inner::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+}
+.ait-checkbox-item-checked.disabled .ait-checkbox-inner::after {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+.ait-checkbox-text {
+  padding: 0 8px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.ait-checkbox-item.disabled .ait-checkbox-text {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes ait_checkbox_effect {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
