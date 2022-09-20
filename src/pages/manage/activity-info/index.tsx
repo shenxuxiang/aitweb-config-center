@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { memo, useCallback, useLayoutEffect, useMemo, useDeferredValue, useTransition, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Map, APILoader, ToolBarControl, Geolocation, Marker } from '@uiw/react-amap';
@@ -56,6 +56,7 @@ const initialState = {
   addressName: '',
   longitude: '',
   latitude: '',
+  addressNameCopy: '',
 };
 
 function ActivityInfo(props: any) {
@@ -77,47 +78,48 @@ function ActivityInfo(props: any) {
     latitude,
   } = state;
 
-  console.log(props);
   useLayoutEffect(() => {
-    props.queryActivityInfo().then((res: any) => {
-      const { data, code } = res;
-      const copyCourses = data.courses?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
-      const copyCharacteristic =
-        data.characteristic?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
-      const copyAdvantages = data.advantages?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
-      const contactPhoneNumber = data.contact?.phoneNumber;
-      const contactQrcode = [{ url: data.contact.qrcode, status: 'done', uid: createKey() }];
-      const shareInfoImageUrl = [{ url: data.shareInfo?.imageUrl, status: 'done', uid: createKey() }];
-      const shareInfoPath = data.shareInfo?.path;
-      const shareInfoTitle = data.shareInfo?.title;
-      const teacherInfoAvatar = [{ url: data.teacherInfo?.avatar, status: 'done', uid: createKey() }];
-      const teacherInfoName = data.teacherInfo?.name;
-      const teacherInfoIntroduce = data.teacherInfo?.introduce;
-      const addressName = data.address.name;
-      const { longitude } = data.address;
-      const { latitude } = data.address;
+    props.queryActivityInfo()
+      .then((res: any) => {
+        const { data, code } = res;
+        const copyCourses = data.courses?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
+        const copyCharacteristic =
+          data.characteristic?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
+        const copyAdvantages = data.advantages?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
+        const contactPhoneNumber = data.contact?.phoneNumber;
+        const contactQrcode = [{ url: data.contact.qrcode, status: 'done', uid: createKey() }];
+        const shareInfoImageUrl = [{ url: data.shareInfo?.imageUrl, status: 'done', uid: createKey() }];
+        const shareInfoPath = data.shareInfo?.path;
+        const shareInfoTitle = data.shareInfo?.title;
+        const teacherInfoAvatar = [{ url: data.teacherInfo?.avatar, status: 'done', uid: createKey() }];
+        const teacherInfoName = data.teacherInfo?.name;
+        const teacherInfoIntroduce = data.teacherInfo?.introduce;
+        const addressName = data.address.name;
+        const { longitude } = data.address;
+        const { latitude } = data.address;
 
-      if (code === 0) {
-        setState({
-          ...state,
-          ...data,
-          copyCourses,
-          copyCharacteristic,
-          copyAdvantages,
-          contactPhoneNumber,
-          contactQrcode,
-          shareInfoImageUrl,
-          shareInfoPath,
-          shareInfoTitle,
-          teacherInfoAvatar,
-          teacherInfoName,
-          teacherInfoIntroduce,
-          addressName,
-          longitude,
-          latitude,
-        });
-      }
-    });
+        if (code === 0) {
+          setState({
+            ...state,
+            ...data,
+            copyCourses,
+            copyCharacteristic,
+            copyAdvantages,
+            contactPhoneNumber,
+            contactQrcode,
+            shareInfoImageUrl,
+            shareInfoPath,
+            shareInfoTitle,
+            teacherInfoAvatar,
+            teacherInfoName,
+            teacherInfoIntroduce,
+            addressName,
+            longitude,
+            latitude,
+          });
+        }
+      })
+      .catch((error: any) => console.log(error));
   }, []);
 
   const courseColumns = useMemo(
@@ -551,10 +553,17 @@ function ActivityInfo(props: any) {
   const handleChangeAddressName = useCallback((event: any) => {
     setState({ addressName: event.target.value });
   }, []);
+  console.log(state.count, 'count');
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.module_title}>地址</h1>
+      <h1 className={styles.module_title} onClick={
+        () => {
+          setTimeout(() => {
+            alert(addressName)
+          }, 3000)
+        }
+      }>地址</h1>
       <div className={styles.module_content}>
         <div className={styles.module_content_item}>
           <span className={styles.module_content_item_title}>地址名称： </span>
@@ -573,25 +582,27 @@ function ActivityInfo(props: any) {
         <div style={{ height: '400px', marginTop: 20 }}>
           <APILoader akay="314007a9518846eb7e3df09babf811a0">
             <Map style={{ height: 400 }} center={[longitude, latitude]} onClick={handleChangeAddress}>
-              {({ AMap }) => (
-                <>
-                  <ToolBarControl offset={[16, 10]} position="RB" />
-                  <Geolocation
-                    maximumAge={100000}
-                    borderRadius="5px"
-                    position="RB"
-                    offset={[16, 80]}
-                    zoomToAccuracy
-                    showCircle
-                  />
-                  <Marker
-                    visiable
-                    animation="AMAP_ANIMATION_DROP"
-                    label={{ content: addressName, offset: new AMap.Pixel(0, -10), direction: 'top' }}
-                    position={new AMap.LngLat(Number(longitude), Number(latitude))}
-                  />
-                </>
-              )}
+              {({ AMap }: any) => {
+                return (
+                  <>
+                    <ToolBarControl offset={[16, 10]} position="RB" />
+                    <Geolocation
+                      maximumAge={100000}
+                      borderRadius="5px"
+                      position="RB"
+                      offset={[16, 80]}
+                      zoomToAccuracy
+                      showCircle
+                    />
+                    <Marker
+                      visiable
+                      animation="AMAP_ANIMATION_DROP"
+                      label={{ content: addressName, offset: new AMap.Pixel(0, -10), direction: 'top' }}
+                      position={new AMap.LngLat(Number(longitude), Number(latitude))}
+                    />
+                  </>
+                );
+              }}
             </Map>
           </APILoader>
         </div>

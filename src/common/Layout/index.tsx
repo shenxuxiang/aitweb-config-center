@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Outlet } from 'react-router-dom';
 import logo from '@/static/images/logo.png';
 import Navigation from '@/components/Navigation';
 import './index.less';
@@ -25,7 +26,9 @@ export default class extends PureComponent<any, any> {
             indicatorStyle={{ height: 2 }}
           />
         </header>
-        <div className="page-container">{this.props.children}</div>
+        <div className="page-container">
+          <Outlet />
+        </div>
       </div>
     );
   }

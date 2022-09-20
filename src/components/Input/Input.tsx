@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import useReducer from '@/utils/useReducer';
 import './index.less';
 
-type InputType = 'text' | 'number' | 'Number' | 'passwd';
+type InputType = 'text' | 'number' | 'Number' | 'password';
 export interface InputProps {
   type?: InputType;
   suffix?: React.ReactNode | string;

@@ -1,10 +1,10 @@
 import message from '@/components/Message';
-
 export type HttpMethod = 'GET' | 'POST' | 'HEAD' | 'PUT';
 export interface HttpResponse {
-  data: any;
-  code: number;
-  msg: string;
+  data: any,
+  authorToken: string,
+  code: number,
+  msg: string,
 }
 
 export function send(url: string, method: HttpMethod, query: any): Promise<HttpResponse> {
@@ -13,9 +13,10 @@ export function send(url: string, method: HttpMethod, query: any): Promise<HttpR
     xhr.open(method, url);
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        return resolve(JSON.parse(xhr.response));
+        resolve(JSON.parse(xhr.response));
+      } else {
+        reject(new Error(xhr.statusText));
       }
-      return reject(new Error(xhr.statusText));
     };
     xhr.ontimeout = function () {
       return reject(new Error('请求超时'));
@@ -23,6 +24,8 @@ export function send(url: string, method: HttpMethod, query: any): Promise<HttpR
     xhr.onerror = function () {
       return reject(new Error('请求失败，请稍后重试！'));
     };
+    console.log(window.localStorage.getItem('authorToken'), 'get');
+    xhr.setRequestHeader('authorization', window.localStorage.getItem('authorToken') || '')
     const body = method === 'GET' || method === 'HEAD' ? null : query;
     if (body instanceof FormData) {
       xhr.send(body);
@@ -33,19 +36,28 @@ export function send(url: string, method: HttpMethod, query: any): Promise<HttpR
 }
 
 export default function request(url: string, method: HttpMethod, query: any) {
+
   return send(url, method, query)
     .then((response: HttpResponse) => {
       const { code, msg } = response;
-      if (code === 0) return response;
+      if (code === 0) {
+        window.localStorage.setItem('authorToken', response.authorToken);
+        return response;
+      } else if (code === 1999) {
+        let path = window.location.hash.slice(1);
+        path = encodeURIComponent(path);
+        window.location.href = '/#/login?redirect=' + path;
+        throw new Error('用户未登录');
+      }
       throw new Error(msg);
     })
     .catch((error) => {
-      console.log(error);
       if (error instanceof Error) {
         message.error(error.message);
       } else {
         message.error(error);
       }
+      return Promise.reject(error);
     });
 }
 
