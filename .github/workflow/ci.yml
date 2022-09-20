@@ -1,0 +1,61 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - qa
+      - master
+      - release
+
+env:
+  author: shenxuxiang
+
+jobs:
+  job-1:
+    name: Build Task
+    runs-on: ubuntu-latest
+    if: ${{ github.event.head_commit.message.startsWith('build') }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: action/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Echo Time
+        id: timestamp
+        run: |
+          echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S)
+          echo "::set-output name=timestamp::$(echo $(date --date="now + 8 hours" +%Y-%m-%d%t%H:%M:%S))"
+
+      # - name: Build Code
+      #   run: |
+      #     npm run build
+      #     tar -czvf dist.tar.gz ./dist
+
+  job-2:
+    name: Test Task
+    runs-on: ubuntu-latest
+    needs: job-1
+    env:
+      ref: ${{ github.ref }}
+      ref_name: ${{ github.ref_name }}
+      ref_type: ${{ github.ref_type }}
+      event_name: ${{ github.event_name }}
+      author: ${{ github.event.head_commit.commiter.user_name }}
+      email: ${{ github.event.head_commit.commiter.email }}
+      timestamp: ${{ job-1.steps.timestamp.outputs.timestamp }}
+    steps:
+      - name: Echo Env
+        run: |
+          echo "ref: ${ref}"
+          echo "ref_name: ${ref_name}"
+          echo "ref_type: ${ref_type}"
+          echo "event_name: ${event_name}"
+          echo "author: ${author}"
+          echo "email: ${email}"
+          echo "time: ${timestamp}"
+
+
+
