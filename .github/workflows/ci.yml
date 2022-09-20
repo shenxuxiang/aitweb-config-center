@@ -13,7 +13,7 @@ jobs:
   job-1:
     name: Build Task
     runs-on: ubuntu-latest
-    if: ${{ github.event.head_commit.message.startsWith('build') }}
+    if: ${{ startsWith(github.event.head_commit.message, 'build') }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
