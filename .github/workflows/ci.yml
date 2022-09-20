@@ -39,7 +39,29 @@ jobs:
       #     npm run build
       #     tar -czvf dist.tar.gz ./dist
 
-
+  job-2:
+    name: Test Task
+    runs-on: ubuntu-latest
+    needs: job-1
+    env:
+      ref: ${{ github.ref }}
+      ref_name: ${{ github.ref_name }}
+      ref_type: ${{ github.ref_type }}
+      event_name: ${{ github.event_name }}
+      author: ${{ github.event.head_commit.committer.username }}
+      email: ${{ github.event.head_commit.committer.email }}
+      timestamp: ${{ needs.job-1.outputs.output1 }}
+    steps:
+      - name: Echo Env
+        run: |
+          echo "ref: ${ref}"
+          echo "ref_name: ${ref_name}"
+          echo "ref_type: ${ref_type}"
+          echo "event_name: ${event_name}"
+          echo "author: ${author}"
+          echo "email: ${email}"
+          echo "time: ${timestamp}"
+          echo "output1:" ${{ needs.job-1.outputs.output1 }}
 
 
 
