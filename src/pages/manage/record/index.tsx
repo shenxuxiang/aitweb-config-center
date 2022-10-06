@@ -109,6 +109,7 @@ function Record(props: any) {
             setState(() => ({ dataSource: list, total, pageNum }));
           }
         })
+        .catch((error: any) => console.log(error))
         .finally(() => setState({ loading: false }));
     },
     [pageSize, pageNum, searchCondition],

@@ -201,14 +201,16 @@ module.exports = {
       progress: true,
     },
     hot: true,
-    host: 'localhost',
+    // host: 'localhost',
+    host: 'aitweb.com',
     port: 3000,
     historyApiFallback: true,
     compress: true,
     open: ['/'],
     proxy: {
       '/api': {
-        target: 'https://localhost',
+        target: 'https://aitweb.com',
+        changeOrigin: true,
         secure: false,
       }
     }

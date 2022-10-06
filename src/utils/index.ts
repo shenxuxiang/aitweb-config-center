@@ -148,3 +148,11 @@ export function createKey(int?: number) {
 export function getCssPropertyValue(target: Element, propertyName: string) {
   return window.getComputedStyle(target, null).getPropertyValue(propertyName);
 }
+
+
+export function getPattern(name: string) {
+  let source = '(?:^|;\\s*)';
+  source += name.replace(/[\[\](){}\\/|^$+-?#\s]/, '\\$&');
+  source += '=([^;]+)';
+  return new RegExp(source);
+}
