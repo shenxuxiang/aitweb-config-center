@@ -21,4 +21,3 @@ class App extends React.Component {
 
 container.render(<App />);
 console.log('hello world');
-console.log('hello world2222');
