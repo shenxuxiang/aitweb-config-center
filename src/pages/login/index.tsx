@@ -34,7 +34,6 @@ class Login extends PureComponent<any, any> {
   }
 
   onSubmit = () => {
-
     console.log(this.state);
     const { userName, password } = this.state;
     if (!userName) {
