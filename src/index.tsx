@@ -20,14 +20,4 @@ class App extends React.Component {
 }
 
 container.render(<App />);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-=======
-console.log('hello world333');
->>>>>>> e1a1edf (feat: 添加第三个 helloworld 日志)
-=======
-console.log('hello world');
-console.log('hello world2222');
->>>>>>> 56786db (feat: 添加第二个 helloworld 日志)
