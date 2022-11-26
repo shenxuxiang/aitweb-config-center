@@ -8,7 +8,6 @@ import '@/utils/performance';
 
 const root = document.getElementById('root');
 const container = ReactDOM.createRoot(root!);
-console.log('hello world 3333');
 class App extends React.Component {
   render() {
     return (
