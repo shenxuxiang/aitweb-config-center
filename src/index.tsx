@@ -19,3 +19,4 @@ class App extends React.Component {
 }
 
 container.render(<App />);
+console.log('hi world');
