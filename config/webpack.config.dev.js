@@ -113,12 +113,12 @@ module.exports = {
                 },
               },
             },
-            require.resolve('postcss'),
+            require.resolve('postcss-loader'),
           ]
         },
         {
           test: /\.css$/,
-          include: path.resolve('src'),
+          exclude: /\.module\.css$/,
           use: [
             require.resolve('style-loader'),
             {
@@ -130,7 +130,7 @@ module.exports = {
                 modules: false,
               },
             },
-            require.resolve('postcss'),
+            require.resolve('postcss-loader'),
           ]
         },
         {
@@ -158,6 +158,7 @@ module.exports = {
         {
           test: /\.less$/,
           include: path.resolve('src'),
+          exclude: /\.module\.less$/,
           use: [
             require.resolve('style-loader'),
             {
