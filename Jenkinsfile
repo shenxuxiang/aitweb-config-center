@@ -43,12 +43,14 @@ pipeline {
       }
       steps {
         script {
-          env.GIT_COMMIT_MSG=sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
+          String gitCommitMessage = getCommitMessage()
+
+          println("GIT CommitMessage: " + gitCommitMessage)
 
           sh '''
             echo "author: $(whoami)";
             echo "environment production";
-            echo "message: ${env.GIT_COMMIT_MSG}";
+            echo "message: ${gitCommitMessage}";
 
             yarn install;
             npm run build;
@@ -60,3 +62,14 @@ pipeline {
     }
   }
 }
+
+
+@NonCPS
+String getCommitMessage(){
+    commitMessage = " "
+    for ( changeLogSet in currentBuild.changeSets){
+        for (entry in changeLogSet.getItems()){
+            commitMessage = entry.msg
+        }
+    }
+    return commitMessage
