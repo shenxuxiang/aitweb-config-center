@@ -24,12 +24,14 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo "$(whoami)";
-        npm install;
-        npm run build;
-        rm -rf /usr/share/nginx/dist;
-        mv ./dist /usr/share/nginx/dist;
-        echo "Build End";
+        sh '
+          echo "$(whoami)";
+          npm install;
+          npm run build;
+          rm -rf /usr/share/nginx/dist;
+          mv ./dist /usr/share/nginx/dist;
+          echo "Build End";
+        '
       }
     }
   }
