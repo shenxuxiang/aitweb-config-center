@@ -24,7 +24,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh label: '', script: '''
+        sh '''
           echo "======= 开始打包 ========"
           echo "$(whoami)";
           npm install;
