@@ -21,6 +21,12 @@ pipeline {
       regexpFilterExpression: '^refs/heads/(master|pl|dev)$'
     )
   }
+
+  environment {
+    author = "shenxuxiang"
+    version = "1.0.0"
+  }
+
   stages {
     stage('Build Development') {
       when {
@@ -44,19 +50,22 @@ pipeline {
       steps {
         script {
           String gitCommitMessage = getCommitMessage()
-
-          println("GIT CommitMessage: " + gitCommitMessage)
+          env.commit_message = gitCommitMessage;
 
           sh '''
-            echo "author: $(whoami)";
-            echo "environment production";
-            echo "message: ${gitCommitMessage}";
+            echo "author: ${author}";
+            echo "version: ${version}";
+            echo "message: ${env.commit_message}";
 
-            yarn install;
-            npm run build;
-            rm -rf /usr/share/nginx/dist;
-            mv ./dist /usr/share/nginx/dist;
+            # yarn install;
+            # npm run build;
+            # rm -rf /usr/share/nginx/dist;
+            #mv ./dist /usr/share/nginx/dist;
           '''
+
+          echo "${author}";
+          echo "${version}";
+          echo "${env.commit_message}";
         }
       }
     }
@@ -66,11 +75,11 @@ pipeline {
 
 @NonCPS
 String getCommitMessage(){
-    commitMessage = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
-            commitMessage = entry.msg
-        }
+  commitMessage = ""
+  for ( changeLogSet in currentBuild.changeSets) {
+    for (entry in changeLogSet.getItems()){
+      commitMessage = entry.msg
     }
-    return commitMessage
+  }
+  return commitMessage
 }
