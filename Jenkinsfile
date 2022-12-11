@@ -24,14 +24,15 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '
+        sh label: '', script: '''
+          echo "======= 开始打包 ========"
           echo "$(whoami)";
           npm install;
           npm run build;
           rm -rf /usr/share/nginx/dist;
           mv ./dist /usr/share/nginx/dist;
-          echo "Build End";
-        '
+          echo "======= 打包结束、开始部署 ======="
+        '''
       }
     }
   }
