@@ -45,7 +45,7 @@ pipeline {
         sh '''
           echo "author: $(whoami)";
           echo "environment production";
-          npm install;
+          yarn install;
           npm run build;
           rm -rf /usr/share/nginx/dist;
           mv ./dist /usr/share/nginx/dist;
