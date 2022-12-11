@@ -22,16 +22,33 @@ pipeline {
     )
   }
   stages {
-    stage('Build') {
+    stage('Build Development') {
+      when {
+        branch 'dev'
+      }
       steps {
         sh '''
-          echo "======= 开始打包 ========"
-          echo "$(whoami)";
+          echo "author: $(whoami)";
+          echo "environment development";
           npm install;
           npm run build;
           rm -rf /usr/share/nginx/dist;
           mv ./dist /usr/share/nginx/dist;
-          echo "======= 打包结束、开始部署 ======="
+        '''
+      }
+    }
+    stage ('Build Production') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh '''
+          echo "author: $(whoami)";
+          echo "environment production";
+          npm install;
+          npm run build;
+          rm -rf /usr/share/nginx/dist;
+          mv ./dist /usr/share/nginx/dist;
         '''
       }
     }
