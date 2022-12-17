@@ -49,7 +49,7 @@ pipeline {
       steps {
         script {
           commit_message = getCommitMessage();
-          author = getAuthor();
+          author = getAuthorName();
           env.build_env = "production";
           env.commit_message = commit_message;
           env.author = author;
@@ -83,16 +83,28 @@ pipeline {
 }
 
 
+
 @NonCPS
-String getAuthor(){
-    author = ""
+String getGitcommitID(){
+    gitCommitID = " "
     for ( changeLogSet in currentBuild.changeSets){
         for (entry in changeLogSet.getItems()){
-            author = entry.authorName
+            gitCommitID = entry.commitId
         }
     }
-    return author
+    return gitCommitID
 }
+
+@NonCPS
+String getAuthorName(){
+    gitAuthorName = " "
+    for ( changeLogSet in currentBuild.changeSets){
+        for (entry in changeLogSet.getItems()){
+            gitAuthorName = entry.authorName
+        }
+    }
+    return gitAuthorName
+
 
 @NonCPS
 String getCommitMessage(){
