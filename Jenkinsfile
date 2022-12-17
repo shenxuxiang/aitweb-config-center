@@ -22,6 +22,16 @@ pipeline {
     )
   }
 
+  // 定义了超时时间为 300s
+  options {
+      timeout(time: 300, unit: 'SECONDS');
+  }
+
+  // 定义了 environment 可选参数，
+  parameters {
+      choice choices: ['development', 'production', 'prerelease'], name: 'environment'
+  }
+
   environment {
     build_env = "development"
   }
@@ -48,11 +58,23 @@ pipeline {
       }
       steps {
         script {
+          dingtalk (
+            robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
+            type: 'TEXT',
+            text: [
+              "aitweb-config-center 项目正在打包",
+              "environment: production",
+            ],
+            at: [
+              "${GIT_COMMITTER_NAME}"
+            ]
+          );
+
           sh '''
-            # yarn install;
-            # npm run build;
-            # rm -rf /usr/share/nginx/dist;
-            # mv ./dist /usr/share/nginx/dist;
+            yarn install;
+            npm run build;
+            rm -rf /usr/share/nginx/dist;
+            mv ./dist /usr/share/nginx/dist;
           '''
         }
       }
@@ -62,22 +84,14 @@ pipeline {
   post {
     success {
       script {
-        def buildEnvironment = "development";
-        def branchName = "${GIT_BRANCH}";
-
-        if (branchName.contains('master')) {
-          buildEnvironment = "production";
-        } else {
-          buildEnvironment = "development";
-        }
-
         dingtalk (
           robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
           type: 'TEXT',
           text: [
             "打包项目: aitweb-config-center",
-            "打包环境: ${buildEnvironment}",
-            "commit-id: ${GIT_COMMIT}; pusher: ${GIT_COMMITTER_NAME}"
+            "打包分支: ${GIT_BRANCH}",
+            "commitID: ${GIT_COMMIT}",
+            "pusher: ${GIT_COMMITTER_NAME}"
           ],
           at: [
             "${GIT_COMMITTER_NAME}"
