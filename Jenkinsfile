@@ -23,8 +23,7 @@ pipeline {
   }
 
   environment {
-    author = "shenxuxiang"
-    version = "1.0.0"
+    build_env = development
   }
 
   stages {
@@ -49,28 +48,51 @@ pipeline {
       }
       steps {
         script {
-          env.commit_message = getCommitMessage();
-
+          commit_message = getCommitMessage();
+          author = getAuthor();
+          env.build_env = development;
+          env.commit_message = commit_message;
+          env.author = author;
           sh '''
-            echo "author: ${author}";
-            echo "version:co ${version}";
-            echo "message: ${env.commit_message}";
-
             # yarn install;
             # npm run build;
             # rm -rf /usr/share/nginx/dist;
-            #mv ./dist /usr/share/nginx/dist;
+            # mv ./dist /usr/share/nginx/dist;
           '''
-
-          echo "${author}";
-          echo "${version}";
-          echo "${env.commit_message}";
         }
       }
     }
   }
+
+  post {
+    success {
+      dingtalk (
+        robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
+        type: 'TEXT',
+        text: [
+          "项目: aitweb-config-center",
+          "打包环境: ${build_env}",
+          'commit-msg: ${commit_message}; pusher: ${author}'
+        ],
+        at: [
+          "${author}"
+        ]
+      )
+    }
+  }
 }
 
+
+@NonCPS
+String getAuthor(){
+    author = ""
+    for ( changeLogSet in currentBuild.changeSets){
+        for (entry in changeLogSet.getItems()){
+            author = entry.authorName
+        }
+    }
+    return author
+}
 
 @NonCPS
 String getCommitMessage(){
