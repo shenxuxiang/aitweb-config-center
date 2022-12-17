@@ -1,10 +1,10 @@
 import message from '@/components/Message';
 export type HttpMethod = 'GET' | 'POST' | 'HEAD' | 'PUT';
 export interface HttpResponse {
-  data: any,
-  authorToken: string,
-  code: number,
-  msg: string,
+  data: any;
+  authorToken: string;
+  code: number;
+  msg: string;
 }
 
 export function send(url: string, method: HttpMethod, query: any): Promise<HttpResponse> {
@@ -25,7 +25,7 @@ export function send(url: string, method: HttpMethod, query: any): Promise<HttpR
       return reject(new Error('请求失败，请稍后重试！'));
     };
     console.log(window.localStorage.getItem('authorToken'), 'get');
-    xhr.setRequestHeader('authorization', window.localStorage.getItem('authorToken') || '')
+    xhr.setRequestHeader('authorization', window.localStorage.getItem('authorToken') || '');
     const body = method === 'GET' || method === 'HEAD' ? null : query;
     if (body instanceof FormData) {
       xhr.send(body);
@@ -36,7 +36,6 @@ export function send(url: string, method: HttpMethod, query: any): Promise<HttpR
 }
 
 export default function request(url: string, method: HttpMethod, query: any) {
-
   return send(url, method, query)
     .then((response: HttpResponse) => {
       const { code, msg } = response;

@@ -14,15 +14,15 @@ function RouterMap() {
   return useRoutes([
     {
       path: '/login',
-      element: <Login/>
+      element: <Login />,
     },
     {
       path: '/register',
-      element: <Login/>
+      element: <Login />,
     },
     {
       element: <Layout />,
-      path: "/",
+      path: '/',
       children: [
         { element: <Home />, path: '/' },
         { element: <Home />, path: '/home' },

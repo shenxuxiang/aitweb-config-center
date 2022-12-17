@@ -18,9 +18,11 @@ class Home extends PureComponent<any, any> {
   }
 
   render() {
-    return <div className={classes.page}>
-      <div className={classes.body}>11122333</div>
-    </div>;
+    return (
+      <div className={classes.page}>
+        <div className={classes.body}>11122333</div>
+      </div>
+    );
   }
 }
 

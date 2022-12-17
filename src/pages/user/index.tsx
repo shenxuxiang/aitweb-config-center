@@ -8,7 +8,7 @@ export default class extends PureComponent<any, any> {
         <Space>
           <Button type="primary">用户中心</Button>
           <Button>用户中心</Button>
-          <Button>environment production hhss</Button>
+          <Button>environment production Jenkins</Button>
         </Space>
       </section>
     );

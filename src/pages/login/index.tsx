@@ -16,22 +16,23 @@ class Login extends PureComponent<any, any> {
   public type: 'login' | 'register';
 
   constructor(props: any) {
-    super(props); console.log(props);
+    super(props);
+    console.log(props);
     this.type = props.location.pathname === '/login' ? 'login' : 'register';
     this.state = {
       userName: '',
       password: '',
       loading: false,
-    }
+    };
   }
 
   handleChangeUserName = (event: any) => {
     this.setState({ userName: event.target.value });
-  }
+  };
 
   handleChangePassword = (event: any) => {
     this.setState({ password: event.target.value });
-  }
+  };
 
   onSubmit = () => {
     console.log(this.state);
@@ -41,8 +42,10 @@ class Login extends PureComponent<any, any> {
     } else if (!password) {
       return message.warn('用户密码不能为空');
     }
-    this.props.login({ userName, password })
-      .then((response: any) => {console.log(response);
+    this.props
+      .login({ userName, password })
+      .then((response: any) => {
+        console.log(response);
         if (response.code === 0) {
           const search = this.props.location.search;
           const page = search.split('?redirect=')[1];
@@ -51,8 +54,8 @@ class Login extends PureComponent<any, any> {
       })
       .catch((error: any) => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   onRegister = () => {
     const { userName, password } = this.state;
@@ -61,19 +64,20 @@ class Login extends PureComponent<any, any> {
     } else if (!password) {
       return message.warn('用户密码不能为空');
     }
-    this.props.register({ userName, password })
+    this.props
+      .register({ userName, password })
       .then((response: any) => {
         console.log(response);
       })
       .catch((error: any) => {
         console.log(error);
       });
-  }
+  };
 
   handleNavigateToRegister = () => {
     this.props.navigator('/register');
     window.location.reload();
-  }
+  };
 
   render() {
     const { userName, password, loading } = this.state;
@@ -83,11 +87,7 @@ class Login extends PureComponent<any, any> {
           <div className={styles.login_wrapper}>
             <div className={styles.form_item}>
               <span className={styles.form_item_title}>用户名：</span>
-              <Input
-                value={userName}
-                placeholder="请输入用户名"
-                onChange={this.handleChangeUserName}
-              />
+              <Input value={userName} placeholder="请输入用户名" onChange={this.handleChangeUserName} />
             </div>
             <div className={styles.form_item}>
               <span className={styles.form_item_title}>密码：</span>
@@ -100,22 +100,26 @@ class Login extends PureComponent<any, any> {
               />
             </div>
             <div className={`${styles.form_item} ${styles.form_submit}`}>
-              {
-                this.type === 'login' ?
-                  <Button type="primary" style={{ width: 100 }} onClick={this.onSubmit}>登录</Button> :
-                  <Button type="primary" style={{ width: 100 }} onClick={this.onRegister}>注册</Button>
-              }
+              {this.type === 'login' ? (
+                <Button type="primary" style={{ width: 100 }} onClick={this.onSubmit}>
+                  登录
+                </Button>
+              ) : (
+                <Button type="primary" style={{ width: 100 }} onClick={this.onRegister}>
+                  注册
+                </Button>
+              )}
             </div>
-            {
-              this.type === 'login' ?
-                <div className={styles.foot}>
-                  还没有账号，去
-                  <Button type="link" onClick={this.handleNavigateToRegister}>注册</Button>
-                </div> : null
-            }
+            {this.type === 'login' ? (
+              <div className={styles.foot}>
+                还没有账号，去
+                <Button type="link" onClick={this.handleNavigateToRegister}>
+                  注册
+                </Button>
+              </div>
+            ) : null}
           </div>
         </section>
-
       </Spin>
     );
   }

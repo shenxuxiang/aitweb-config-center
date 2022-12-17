@@ -1,4 +1,13 @@
-import React, { memo, useCallback, useLayoutEffect, useMemo, useDeferredValue, useTransition, useEffect, useRef } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useDeferredValue,
+  useTransition,
+  useEffect,
+  useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Map, APILoader, ToolBarControl, Geolocation, Marker } from '@uiw/react-amap';
@@ -79,7 +88,8 @@ function ActivityInfo(props: any) {
   } = state;
 
   useLayoutEffect(() => {
-    props.queryActivityInfo()
+    props
+      .queryActivityInfo()
       .then((res: any) => {
         const { data, code } = res;
         const copyCourses = data.courses?.map((item: any) => ({ ...item, _id: createKey(), edit: false })) ?? [];
@@ -557,13 +567,16 @@ function ActivityInfo(props: any) {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.module_title} onClick={
-        () => {
+      <h1
+        className={styles.module_title}
+        onClick={() => {
           setTimeout(() => {
-            alert(addressName)
-          }, 3000)
-        }
-      }>地址</h1>
+            alert(addressName);
+          }, 3000);
+        }}
+      >
+        地址
+      </h1>
       <div className={styles.module_content}>
         <div className={styles.module_content_item}>
           <span className={styles.module_content_item_title}>地址名称： </span>
