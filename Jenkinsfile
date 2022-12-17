@@ -49,12 +49,11 @@ pipeline {
       }
       steps {
         script {
-          String gitCommitMessage = getCommitMessage()
-          env.commit_message = gitCommitMessage;
+          env.commit_message = getCommitMessage();
 
           sh '''
             echo "author: ${author}";
-            echo "version: ${version}";
+            echo "version:co ${version}";
             echo "message: ${env.commit_message}";
 
             # yarn install;
