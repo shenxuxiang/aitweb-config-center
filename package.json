@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "./src/**.*{.ts,.tsx}": [
+    "./src/**/*{.ts,.tsx}": [
       "npm run prettier",
       "npm run lint",
       "git add ."

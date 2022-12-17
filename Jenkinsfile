@@ -23,7 +23,7 @@ pipeline {
   }
 
   environment {
-    build_env = development
+    build_env = "development"
   }
 
   stages {
@@ -50,7 +50,7 @@ pipeline {
         script {
           commit_message = getCommitMessage();
           author = getAuthor();
-          env.build_env = development;
+          env.build_env = "production";
           env.commit_message = commit_message;
           env.author = author;
           sh '''
