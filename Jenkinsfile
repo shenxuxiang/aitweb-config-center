@@ -49,10 +49,10 @@ pipeline {
       steps {
         script {
           commit_message = getCommitMessage();
-          author = getAuthorName();
+          authorName = getAuthorName();
           env.build_env = "production";
           env.commit_message = commit_message;
-          env.author = author;
+          env.authorName = authorName;
           sh '''
             # yarn install;
             # npm run build;
@@ -72,10 +72,10 @@ pipeline {
         text: [
           "项目: aitweb-config-center",
           "打包环境: ${build_env}",
-          'commit-msg: ${commit_message}; pusher: ${author}'
+          "commit-msg: ${commit_message}; pusher: ${authorName}"
         ],
         at: [
-          "${author}"
+          "${authorName}"
         ]
       )
     }
@@ -86,7 +86,7 @@ pipeline {
 
 @NonCPS
 String getGitcommitID(){
-    gitCommitID = " "
+    gitCommitID = ""
     for ( changeLogSet in currentBuild.changeSets){
         for (entry in changeLogSet.getItems()){
             gitCommitID = entry.commitId
