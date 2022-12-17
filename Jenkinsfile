@@ -61,27 +61,29 @@ pipeline {
 
   post {
     success {
-      def buildEnvironment = "development";
-      def branchName = "${GIT_BRANCH}";
+      script {
+        def buildEnvironment = "development";
+        def branchName = "${GIT_BRANCH}";
 
-      if (branchName.conatins('master')) {
-        buildEnvironment = "production";
-      } else {
-        buildEnvironment = "development";
+        if (branchName.contains('master')) {
+          buildEnvironment = "production";
+        } else {
+          buildEnvironment = "development";
+        }
+
+        dingtalk (
+          robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
+          type: 'TEXT',
+          text: [
+            "打包项目: aitweb-config-center",
+            "打包环境: ${buildEnvironment}",
+            "commit-id: ${GIT_COMMIT}; pusher: ${GIT_COMMITTER_NAME}"
+          ],
+          at: [
+            "${GIT_COMMITTER_NAME}"
+          ]
+        );
       }
-
-      dingtalk (
-        robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
-        type: 'TEXT',
-        text: [
-          "打包项目: aitweb-config-center",
-          "打包环境: ${buildEnvironment}",
-          "commit-id: ${GIT_COMMIT}; pusher: ${GIT_COMMITTER_NAME}"
-        ],
-        at: [
-          "${GIT_COMMITTER_NAME}"
-        ]
-      )
     }
   }
 }
