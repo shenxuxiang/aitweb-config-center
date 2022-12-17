@@ -104,7 +104,7 @@ String getAuthorName(){
         }
     }
     return gitAuthorName
-
+}
 
 @NonCPS
 String getCommitMessage(){
