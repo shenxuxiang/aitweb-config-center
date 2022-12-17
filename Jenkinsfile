@@ -62,8 +62,10 @@ pipeline {
             robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
             type: 'TEXT',
             text: [
-              "aitweb-config-center 项目正在打包",
-              "environment: production",
+              "【aitweb-config-center】正在打包",
+              "Build Branch【${GIT_BRANCH}】",
+              "Commit ID【${GIT_COMMIT}】",
+              "",
             ],
             at: [
               "${GIT_COMMITTER_NAME}"
@@ -88,10 +90,30 @@ pipeline {
           robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
           type: 'TEXT',
           text: [
-            "打包项目: aitweb-config-center",
-            "打包分支: ${GIT_BRANCH}",
-            "commitID: ${GIT_COMMIT}",
-            "pusher: ${GIT_COMMITTER_NAME}"
+            "【aitweb-config-center】构建成功",
+            "Build Branch【${GIT_BRANCH}】",
+            "Commit ID【${GIT_COMMIT}】",
+            "Pusher【${GIT_COMMITTER_NAME}】",
+            "",
+          ],
+          at: [
+            "${GIT_COMMITTER_NAME}"
+          ]
+        );
+      }
+    }
+
+    failure {
+      script {
+        dingtalk (
+          robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
+          type: 'TEXT',
+          text: [
+            "【aitweb-config-center】构建失败",
+            "Build Branch【${GIT_BRANCH}】",
+            "Commit ID【${GIT_COMMIT}】",
+            "Pusher【${GIT_COMMITTER_NAME}】",
+            "",
           ],
           at: [
             "${GIT_COMMITTER_NAME}"
