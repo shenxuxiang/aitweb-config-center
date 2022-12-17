@@ -48,11 +48,9 @@ pipeline {
       }
       steps {
         script {
-          commit_message = getCommitMessage();
-          authorName = getAuthorName();
           env.build_env = "production";
-          env.commit_message = commit_message;
-          env.authorName = authorName;
+          env.commit_message = "sssssss";
+          env.authorName = "xxxxxxxx";
           echo "============================= ${GIT_COMMIT}";
           echo "=============================${GIT_BRANCH}";
           echo "=============================${GIT_AUTHOR_NAME}"
