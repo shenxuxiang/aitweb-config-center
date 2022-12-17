@@ -53,6 +53,10 @@ pipeline {
           env.build_env = "production";
           env.commit_message = commit_message;
           env.authorName = authorName;
+          echo "============================= ${GIT_COMMIT}";
+          echo "=============================${GIT_BRANCH}";
+          echo "=============================${GIT_AUTHOR_NAME}"
+
           sh '''
             # yarn install;
             # npm run build;
@@ -82,29 +86,6 @@ pipeline {
   }
 }
 
-
-
-@NonCPS
-String getGitcommitID(){
-    gitCommitID = ""
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
-            gitCommitID = entry.commitId
-        }
-    }
-    return gitCommitID
-}
-
-@NonCPS
-String getAuthorName(){
-    gitAuthorName = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
-            gitAuthorName = entry.authorName
-        }
-    }
-    return gitAuthorName
-}
 
 @NonCPS
 String getCommitMessage(){
