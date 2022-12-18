@@ -18,25 +18,26 @@ pipeline {
       printPostContent: true,
       silentResponse: false,
       // 将变量 ref 赋值给 regexpFilterText
-      regexpFilterText: '$ref',
+      regexpFilterText: '$ref;$commit_message',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^refs/heads/(master|pl|dev)$'
+      regexpFilterExpression: '^refs/heads/(master|pl|dev);build: *+$'
     )
   }
 
+  environment {
+    branchName = "${ref}"
+  }
+
   stages {
-    stage('Build Development') {
-      when {
-        branch 'dev'
-      }
+    stage('output git info') {
       steps {
-        echo "development branch";
+        echo "branchName ${ref}; commit_message ${commit_message}";
       }
     }
     stage ('Build Production') {
       when {
-        branch 'master'
+        environment name: 'branchName', value: 'master'
       }
       steps {
         script {
