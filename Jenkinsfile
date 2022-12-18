@@ -38,7 +38,7 @@ pipeline {
 
     stage ('Build Development') {
       when {
-        environment name: 'branchName', value: 'refs/heads/dev*'
+        environment name: 'branchName', value: 'refs/heads/dev'
       }
       steps {
         script {
@@ -54,7 +54,7 @@ pipeline {
     }
     stage ('Build Production') {
       when {
-        environment name: 'branchName', value: 'refs/heads/master*'
+        environment name: 'branchName', value: 'refs/heads/master'
       }
       steps {
         script {
