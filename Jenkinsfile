@@ -61,8 +61,6 @@ pipeline {
       }
       steps {
         script {
-          echo "============${ref}; ${commit_message}";
-
           dingtalk (
             robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
             type: 'TEXT',
