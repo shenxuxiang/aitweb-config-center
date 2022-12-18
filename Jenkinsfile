@@ -21,23 +21,23 @@ pipeline {
       regexpFilterText: '$ref; $commit_message',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^(master|pl|dev)(/*+)*; build: *+$'
+      regexpFilterExpression: '^/refs/heads/(master|pl|dev)(/*+)*; build: *+$'
     )
   }
 
-  // 定义了超时时间为 300s
-  options {
-      timeout(time: 300, unit: 'SECONDS');
-  }
+  // // 定义了超时时间为 300s
+  // options {
+  //     timeout(time: 300, unit: 'SECONDS');
+  // }
 
-  // 定义了 environment 可选参数，
-  parameters {
-      choice choices: ['development', 'production', 'prerelease'], name: 'environment'
-  }
+  // // 定义了 environment 可选参数，
+  // parameters {
+  //     choice choices: ['development', 'production', 'prerelease'], name: 'environment'
+  // }
 
-  environment {
-    build_env = "development"
-  }
+  // environment {
+  //   build_env = "development"
+  // }
 
   stages {
     stage('Build Development') {
