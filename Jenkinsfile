@@ -18,7 +18,7 @@ pipeline {
       printPostContent: true,
       silentResponse: false,
       // 将变量 ref 赋值给 regexpFilterText
-      regexpFilterText: '$ref; $commit_message',
+      regexpFilterText: '$ref',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
       regexpFilterExpression: '^refs/heads/(pl|dev)$'
