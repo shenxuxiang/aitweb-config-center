@@ -8,7 +8,7 @@ pipeline {
       // ref 指的是推送的分支，格式如：refs/heads/master
       genericVariables: [
         [key: 'ref', value: '$.ref', regexpFilter: '/refs/heads/'],
-        [key: 'commit_message', '$.head_commit.message']
+        [key: 'commit_message', value: '$.head_commit.message']
       ],
       // 与 git webhook 中 payload url 参数中配置的 token 值一致
       token: 'aitwebconfigcenter',
