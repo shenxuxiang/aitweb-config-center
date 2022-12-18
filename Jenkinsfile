@@ -35,9 +35,26 @@ pipeline {
         echo "branchName ${ref}; commit_message ${commit_message}";
       }
     }
+
+    stage ('Build Development') {
+      when {
+        environment name: 'branchName', value: 'refs/heads/dev*'
+      }
+      steps {
+        script {
+          echo "hello world";
+          // sh '''
+          //   yarn install;
+          //   npm run build;
+          //   rm -rf /usr/share/nginx/dist;
+          //   mv ./dist /usr/share/nginx/dist;
+          // '''
+        }
+      }
+    }
     stage ('Build Production') {
       when {
-        environment name: 'branchName', value: 'master'
+        environment name: 'branchName', value: 'refs/heads/master*'
       }
       steps {
         script {
@@ -55,12 +72,12 @@ pipeline {
             ]
           );
 
-          sh '''
-            yarn install;
-            npm run build;
-            rm -rf /usr/share/nginx/dist;
-            mv ./dist /usr/share/nginx/dist;
-          '''
+          // sh '''
+          //   yarn install;
+          //   npm run build;
+          //   rm -rf /usr/share/nginx/dist;
+          //   mv ./dist /usr/share/nginx/dist;
+          // '''
         }
       }
     }
