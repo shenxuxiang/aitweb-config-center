@@ -21,7 +21,7 @@ pipeline {
       regexpFilterText: '$ref',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^refs/heads/(pl|dev)$'
+      regexpFilterExpression: '^refs/heads/(master|pl|dev)$'
     )
   }
 
