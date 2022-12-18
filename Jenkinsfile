@@ -25,34 +25,13 @@ pipeline {
     )
   }
 
-  // // 定义了超时时间为 300s
-  // options {
-  //     timeout(time: 300, unit: 'SECONDS');
-  // }
-
-  // // 定义了 environment 可选参数，
-  // parameters {
-  //     choice choices: ['development', 'production', 'prerelease'], name: 'environment'
-  // }
-
-  // environment {
-  //   build_env = "development"
-  // }
-
   stages {
     stage('Build Development') {
       when {
         branch 'dev'
       }
       steps {
-        sh '''
-          echo "author: $(whoami)";
-          echo "environment development";
-          yarn install;
-          npm run build;
-          rm -rf /usr/share/nginx/dist;
-          mv ./dist /usr/share/nginx/dist;
-        '''
+        echo "development branch";
       }
     }
     stage ('Build Production') {
