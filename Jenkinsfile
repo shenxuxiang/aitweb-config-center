@@ -21,7 +21,7 @@ pipeline {
       regexpFilterText: '$ref;$commit_message',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^refs/heads/(master|pl|dev);build: *+$'
+      regexpFilterExpression: '^refs/heads/(master|pl|dev);build:'
     )
   }
 
