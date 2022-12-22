@@ -8,7 +8,8 @@ pipeline {
       // ref 指的是推送的分支，格式如：refs/heads/master
       genericVariables: [
         [key: 'ref', value: '$.ref', regexpFilter: 'refs/heads/'],
-        [key: 'commit_message', value: '$.head_commit.message']
+        [key: 'commit_message', value: '$.head_commit.message'],
+        [key: 'modified', value: '$.head_commit.modified'],
       ],
       // 与 git webhook 中 payload url 参数中配置的 token 值一致
       token: 'aitwebconfigcenter',
@@ -31,6 +32,16 @@ pipeline {
         script {
           echo "ref: ${ref}; commit_message: ${commit_message}";
           echo "${GIT_BRANCH}";
+          echo "${modified}";
+
+          def hasInstall = false;
+          for (item in ${modified}) {
+            echo "${item}";
+            if (item == "package.json") {
+              hasInstall = true;
+              break;
+            }
+          }
         }
       }
     }
@@ -57,7 +68,11 @@ pipeline {
           );
 
           sh '''
-            yarn install;
+            echo "has install ${hasInstall}";
+            if ( "${hasInstall}" == true ); then
+              yarn install;
+            fi
+
             npm run build;
             rm -rf /usr/share/nginx/dist;
             mv ./dist /usr/share/nginx/dist;
