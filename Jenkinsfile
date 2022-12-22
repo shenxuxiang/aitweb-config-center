@@ -21,7 +21,7 @@ pipeline {
       regexpFilterText: '$ref;$ref;$commit_message',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^(master|dev);' + "${GIT_BRANCH}" + ';build: '
+      regexpFilterExpression: '^(master|dev);' + BRANCH_NAME + ';build: '
     )
   }
 
