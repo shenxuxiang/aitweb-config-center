@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/932.d7b858be.chunk.css","mappings":"AAAA,wCAGE,sBAAuB,CADvB,YAAa,CADb,WAGF,CAJA,gFAKI,eAEJ","sources":["webpack://aitweb-config-center/./src/pages/home/index.module.less"],"sourcesContent":[".page {\n  width: 200px;\n  height: 200px;\n  border: 1px solid green;\n  .body {\n    background: #f80;\n  }\n}\n"],"names":[],"sourceRoot":""}

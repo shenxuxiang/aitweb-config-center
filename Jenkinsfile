@@ -18,18 +18,20 @@ pipeline {
       printPostContent: true,
       silentResponse: false,
       // 将变量 ref 赋值给 regexpFilterText
-      regexpFilterText: '$ref;$commit_message',
+      regexpFilterText: '$ref;$ref;$commit_message',
       // regexpFilterExpression 与 regexpFilterExpression 成对使用
       // regexpFilterExpression 会对 regexpFilterText 的内容进行验证
-      regexpFilterExpression: '^(master|dev);build:'
+      regexpFilterExpression: '^(master|dev);' + $GIT_BRANCH + ';build: '
     )
   }
 
   stages {
     stage('output git info') {
       steps {
-        echo "branchName ${ref}; commit_message ${commit_message}";
-        echo "${GIT_BRANCH}";
+        script {
+          echo "ref: ${ref}; commit_message: ${commit_message}";
+          echo "${GIT_BRANCH}";
+        }
       }
     }
 
@@ -39,18 +41,19 @@ pipeline {
       }
       steps {
         script {
+          def dt = new Date();
+          def time = dt.toString();
+
           dingtalk (
             robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
             type: 'TEXT',
             text: [
-              "【aitweb-config-center】正在打包",
-              "Build Branch【${GIT_BRANCH}】",
-              "Commit ID【${GIT_COMMIT}】",
-              "",
+              "aitweb-config-center is building...",
+              "${GIT_COMMIT}",
+              "build branch ${GIT_BRANCH}",
+              "build start at ${time}",
             ],
-            at: [
-              "${GIT_COMMITTER_NAME}"
-            ]
+            at: [ "${GIT_COMMITTER_NAME}" ]
           );
 
           sh '''
@@ -68,18 +71,20 @@ pipeline {
       }
       steps {
         script {
+          def dt = new Date();
+          def time = dt.toString();
+
           dingtalk (
             robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
             type: 'TEXT',
             text: [
-              "【aitweb-config-center】正在打包",
-              "Build Branch【${GIT_BRANCH}】",
-              "Commit ID【${GIT_COMMIT}】",
-              "",
+              "aitweb-config-center is building...",
+              "${GIT_COMMIT}",
+              "build branch ${GIT_BRANCH}",
+              "build started at ${time}",
+              ""
             ],
-            at: [
-              "${GIT_COMMITTER_NAME}"
-            ]
+            at: [ "${GIT_COMMITTER_NAME}" ]
           );
 
           sh '''
@@ -96,38 +101,40 @@ pipeline {
   post {
     success {
       script {
+        def dt = new Date();
+        def time = dt.toString();
+
         dingtalk (
           robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
           type: 'TEXT',
           text: [
-            "【aitweb-config-center】构建成功",
-            "Build Branch【${GIT_BRANCH}】",
-            "Commit ID【${GIT_COMMIT}】",
-            "Pusher【${GIT_COMMITTER_NAME}】",
+            "aitweb-config-center is build completed",
+            "${GIT_COMMIT}",
+            "build branch ${GIT_BRANCH}",
+            "build completed at ${time}",
             "",
           ],
-          at: [
-            "${GIT_COMMITTER_NAME}"
-          ]
+          at: [ "${GIT_COMMITTER_NAME}" ]
         );
       }
     }
 
     failure {
       script {
+        def dt = new Date();
+        def time = dt.toString();
+
         dingtalk (
           robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
           type: 'TEXT',
           text: [
-            "【aitweb-config-center】构建失败",
-            "Build Branch【${GIT_BRANCH}】",
-            "Commit ID【${GIT_COMMIT}】",
-            "Pusher【${GIT_COMMITTER_NAME}】",
+            "aitweb-config-center is build failed",
+            "${GIT_COMMIT}",
+            "build branch ${GIT_BRANCH}",
+            "build failed at ${time}",
             "",
           ],
-          at: [
-            "${GIT_COMMITTER_NAME}"
-          ]
+          at: [ "${GIT_COMMITTER_NAME}" ]
         );
       }
     }
