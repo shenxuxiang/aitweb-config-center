@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.prod.js",
     "prettier": "npx prettier -w ./src",
-    "lint": "npx eslint --ext .ts,.tsx --fix ./src"
+    "lint": "npx eslint --ext .ts,.tsx --fix ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
     "src/**/*{.ts,.tsx}": [
