@@ -11,6 +11,7 @@ pipeline {
       genericVariables: [
         [key: 'ref', value: '$.ref', regexpFilter: 'refs/heads/'],
         [key: 'commit_message', value: '$.head_commit.message'],
+        // head_commit.modified 是本次提交修改的文件列表
         [key: 'modified', value: '$.head_commit.modified'],
       ],
       // 与 git webhook 中 payload url 参数中配置的 token 值一致
@@ -29,24 +30,35 @@ pipeline {
   }
 
   stages {
-    stage('output git info') {
+    stage('output variables defined in Generic-Webhook-Trigger plugin') {
       steps {
         script {
-          echo "ref: ${ref}; commit_message: ${commit_message}";
-          echo "${GIT_BRANCH}";
+          echo "ref: ${ref};";
+          echo "commit_message: ${commit_message}";
           echo "modified: ${modified}";
+        }
+      }
+    }
 
+    stage('declare environment variables') {
+      steps {
+        script {
+          // 定义 JSON 对象
           def json = new JsonSlurper();
           def hasNpmInstall = false;
+          // modified 是一个字符串，类似这样："['src/index.js', 'package.json']"
+          // 通过 JSON 将其转换成对象的形式。
           def modifiedFiles = json.parseText(modified);
 
           for (item in modifiedFiles) {
             echo "${item}";
+            // 如果发现本次提交的内容中含有 package.json 文件，则需要重新执行 npm install 或者 yarn install。
             if (item == "package.json") {
               hasNpmInstall = true;
               break;
             }
           }
+          // 最后将本地变量添加到全局环境中。这样在其他的 stage 中就可以访问这个值了。
           env.hasNpmInstall = hasNpmInstall;
         }
       }
@@ -110,8 +122,13 @@ pipeline {
             at: [ "${GIT_COMMITTER_NAME}" ]
           );
 
+          echo "has npm install ${hasNpmInstall}";
+
           sh '''
-            yarn install;
+            if ( "${hasNpmInstall}" == true ); then
+              yarn install;
+            fi
+
             npm run build;
             rm -rf /usr/share/nginx/dist;
             mv ./dist /usr/share/nginx/dist;
