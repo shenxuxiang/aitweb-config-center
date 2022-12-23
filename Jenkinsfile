@@ -35,7 +35,7 @@ pipeline {
           echo "modified: ${modified}";
 
           def hasInstall = false;
-          for (item in ${modified}) {
+          for (item in modified) {
             echo "${item}";
             if (item == "package.json") {
               hasInstall = true;
