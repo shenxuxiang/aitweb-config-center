@@ -108,7 +108,6 @@ pipeline {
         script {
           def dt = new Date();
           def time = dt.toString();
-
           dingtalk (
             robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
             type: 'TEXT',
@@ -143,7 +142,6 @@ pipeline {
       script {
         def dt = new Date();
         def time = dt.toString();
-
         dingtalk (
           robot: '4ca66784-8955-4dd2-aa78-8294f71cbaac',
           type: 'TEXT',
