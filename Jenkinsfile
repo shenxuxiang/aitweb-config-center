@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper;
+
 pipeline {
   agent any
   triggers{
@@ -34,8 +36,11 @@ pipeline {
           echo "${GIT_BRANCH}";
           echo "modified: ${modified}";
 
+          def json = new JsonSlurper();
           def hasInstall = false;
-          for (item in modified) {
+          def modifiedFiles = json.parseText(modified);
+
+          for (item in modifiedFiles) {
             echo "${item}";
             if (item == "package.json") {
               hasInstall = true;
@@ -68,8 +73,9 @@ pipeline {
             at: [ "${GIT_COMMITTER_NAME}" ]
           );
 
+          echo "has install ${hasInstall}";
+
           sh '''
-            echo "has install ${hasInstall}";
             if ( "${hasInstall}" == true ); then
               yarn install;
             fi
