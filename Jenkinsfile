@@ -37,16 +37,17 @@ pipeline {
           echo "modified: ${modified}";
 
           def json = new JsonSlurper();
-          def hasInstall = false;
+          def hasNpmInstall = false;
           def modifiedFiles = json.parseText(modified);
 
           for (item in modifiedFiles) {
             echo "${item}";
             if (item == "package.json") {
-              hasInstall = true;
+              hasNpmInstall = true;
               break;
             }
           }
+          env.hasNpmInstall = hasNpmInstall;
         }
       }
     }
@@ -73,10 +74,10 @@ pipeline {
             at: [ "${GIT_COMMITTER_NAME}" ]
           );
 
-          echo "has install ${hasInstall}";
+          echo "has npm install ${hasNpmInstall}";
 
           sh '''
-            if ( "${hasInstall}" == true ); then
+            if ( "${hasNpmInstall}" == true ); then
               yarn install;
             fi
 
