@@ -32,7 +32,7 @@ pipeline {
         script {
           echo "ref: ${ref}; commit_message: ${commit_message}";
           echo "${GIT_BRANCH}";
-          echo "${modified}";
+          echo "modified: ${modified}";
 
           def hasInstall = false;
           for (item in ${modified}) {
@@ -63,6 +63,7 @@ pipeline {
               "${GIT_COMMIT}",
               "build branch ${GIT_BRANCH}",
               "build start at ${time}",
+              ""
             ],
             at: [ "${GIT_COMMITTER_NAME}" ]
           );
