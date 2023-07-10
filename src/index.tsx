@@ -10,6 +10,7 @@ const root = document.getElementById('root');
 const container = ReactDOM.createRoot(root!);
 class App extends React.Component {
   render() {
+    console.log('build');
     return (
       <Provider store={store}>
         <RouterMap />
